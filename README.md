@@ -1,4 +1,6 @@
-# Cache-Gitter-Archiver
+Cache Gitter Archiver
+---------------------
+
 A tiny class for InterSystems Caché that downloads all Gitter's room messages to the archive file.
 
 **Keywords**: InterSystems, Caché, HTTPS, HTTP, Request, Gitter, API.
