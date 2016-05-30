@@ -2,17 +2,24 @@
 Class Gitter.Archiver
 {
 
+/// SSL configuration name used for HTTPS requests.
+Parameter SSLConfig = "DefaultSSL";
+
 /// Downloads all Gitter's room messages to the archive file. Specify fileName and roomID parameters,
 /// or there would be used default values, which download messages from https://gitter.im/springjazzy/GIS_JKH_Integration
-ClassMethod Archive(fileName As %String = "D:\chat.txt", roomID As %String = "56ea6f5f85d51f252ab942cd") As %Status
+ClassMethod Archive(fileName As %String = "C:\chat.txt", roomID As %String = "56ea6f5f85d51f252ab942cd") As %Status
 {
+	new $namespace
+	zn "%SYS"
+	do:'##class(Security.SSLConfigs).Exists(..#SSLConfig) ##class(Security.SSLConfigs).Create(..#SSLConfig)
+	
 	set LIMIT = 100 // default limit for messages load. Could not be higher.
 	set file = ##class(%File).%New(fileName)
 	do file.Open("WSN")
 	set req = ##class(%Net.HttpRequest).%New()
 	set req.Server = "api.gitter.im"
 	set req.Https = 1
-	set req.SSLConfiguration = "DefaultSSL" // Specify the name of your Caché SSL sertificate here.
+	set req.SSLConfiguration = ..#SSLConfig
 	set chat = ##class(%Object).$new()
 	set beforeId = ""
 	set mes = 0
