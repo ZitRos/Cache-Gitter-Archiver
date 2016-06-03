@@ -45,10 +45,10 @@ ClassMethod Archive(fileName As %String = "C:\chat.txt", roomID As %String = "56
 	for k=mes:-1:1 {
 		set message = chat.$get(k)
 		do file.WriteLine(
-			"["_$ZCONVERT(message.fromUser.displayName_" @ "_message.fromUser.username, "O", "UTF8")
+			"["_ message.fromUser.displayName_" @ "_message.fromUser.username
 			_"] ["_$piece($replace(message.sent, "T", " "), ".", 1)_"]:"
 		)
-		do file.WriteLine($ZCONVERT(message.text, "O", "UTF8"))
+		do file.WriteLine(message.text)
 		do file.WriteLine()
 	}
 	write "Done."
